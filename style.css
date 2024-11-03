@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    flex-direction: column; /* Dispone gli elementi in colonna */
+    justify-content: flex-start; /* Allinea gli elementi in alto */
+    align-items: center; /* Centra gli elementi orizzontalmente */
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    text-align: center; /* Allinea il testo al centro */
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px; /* Spazio sotto il titolo */
+}
+
+#modalita, #startQuiz {
+    margin-top: 10px; /* Spazio sopra la selezione e il bottone */
+}
+
+#quizContainer {
+    margin-top: 20px; /* Spazio sopra il contenitore del quiz */
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#quizAnswer {
+    font-weight: bold;
+}
