@@ -104,41 +104,55 @@ function shuffle(array) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const orderSelect = document.getElementById('order');
-    const traduzioniDiv = document.getElementById('traduzioni');
-    
-    function mostraTraduzioni() {
-        // Rimuovi le traduzioni esistenti
-        traduzioniDiv.innerHTML = '';
-        
-        // Ottieni l'ordine selezionato
-        const ordine = orderSelect.value;
-        
-        // Crea un array di elementi di traduzione
-        const traduzioni = Array.from(document.querySelectorAll('.traduzione'));
-        
-        traduzioni.forEach(traduzione => {
-            const greco = traduzione.getAttribute('data-greco');
-            const traduzioneTesto = traduzione.getAttribute('data-traduzione');
-            
-            // Crea un nuovo elemento per la traduzione
-            const divTraduzione = document.createElement('div');
-            divTraduzione.className = 'traduzione';
-            
-            if (ordine === 'greco') {
-                divTraduzione.textContent = `${greco} - ${traduzioneTesto}`;
-            } else {
-                divTraduzione.textContent = `${traduzioneTesto} - ${greco}`;
-            }
-            
-            traduzioniDiv.appendChild(divTraduzione);
-        });
-    }
-    
-    // Aggiungi un listener per il cambiamento dell'ordine
-    orderSelect.addEventListener('change', mostraTraduzioni);
-    
-    // Mostra le traduzioni all'avvio
-    mostraTraduzioni();
-});
+    const modeSelect = document.getElementById('mode');
+    const startQuizButton = document.getElementById('startQuiz');
+    const quizDiv = document.getElementById('quiz');
+    const domandaDiv = document.getElementById('domanda');
+    const rispostaInput = document.getElementById('risposta');
+    const submitButton = document.getElementById('submit');
+    const traduzioni = [
+        { greco: "λόγος", traduzione: "parola" },
+        { greco: "φιλία", traduzione: "amicizia" },
+        { greco: "ἀλήθεια", traduzione: "verità" }
+    ];
+    let currentQuestionIndex = 0;
 
+    function mostraDomanda() {
+        const currentTraduzione = traduzioni[currentQuestionIndex];
+        if (modeSelect.value === 'traduzione') {
+            domandaDiv.textContent = currentTraduzione.greco;
+        } else {
+            domandaDiv.textContent = currentTraduzione.traduzione;
+        }
+    }
+
+    function iniziaQuiz() {
+        currentQuestionIndex = 0;
+        quizDiv.style.display = 'block';
+        traduzioniDiv.style.display = 'none'; // Nascondi le traduzioni
+        mostraDomanda();
+    }
+
+    function inviaRisposta() {
+        const currentTraduzione = traduzioni[currentQuestionIndex];
+        const risposta = rispostaInput.value.trim().toLowerCase();
+
+        if ((modeSelect.value === 'traduzione' && risposta === currentTraduzione.traduzione) ||
+            (modeSelect.value === 'riconoscimento' && risposta === currentTraduzione.greco)) {
+            alert('Risposta corretta!');
+            currentQuestionIndex++;
+            if (currentQuestionIndex < traduzioni.length) {
+                mostraDomanda();
+                rispostaInput.value = '';
+            } else {
+                alert('Hai completato il quiz!');
+                quizDiv.style.display = 'none';
+            }
+        } else {
+            alert('Risposta sbagliata. Riprova.');
+        }
+    }
+
+    startQuizButton.addEventListener('click', iniziaQuiz);
+    submitButton.addEventListener('click', inviaRisposta);
+});
