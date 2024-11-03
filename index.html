@@ -7,19 +7,23 @@
     <title>Sito Greco</title>
 </head>
 <body>
-    <h1>Traduzioni Greche</h1>
+    <h1>Quiz di Traduzioni Greche</h1>
     
-    <label for="order">Mostra in:</label>
-    <select id="order">
-        <option value="greco">Greco prima</option>
-        <option value="traduzione">Traduzione prima</option>
+    <label for="mode">Modalità:</label>
+    <select id="mode">
+        <option value="traduzione">Traduzione</option>
+        <option value="riconoscimento">Riconoscimento</option>
     </select>
 
-    <div id="traduzioni">
-        <div class="traduzione" data-greco="λόγος" data-traduzione="parola"></div>
-        <div class="traduzione" data-greco="φιλία" data-traduzione="amicizia"></div>
-        <div class="traduzione" data-greco="ἀλήθεια" data-traduzione="verità"></div>
+    <button id="startQuiz">Inizia Quiz</button>
+
+    <div id="quiz" style="display:none;">
+        <div id="domanda"></div>
+        <input type="text" id="risposta" placeholder="Scrivi qui la risposta">
+        <button id="submit">Invia Risposta</button>
     </div>
+
+    <div id="traduzioni" style="display:none;"></div>
 
     <script src="script.js"></script>
 </body>
