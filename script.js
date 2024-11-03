@@ -122,13 +122,20 @@ document.getElementById("startQuiz").addEventListener("click", function () {
     currentWordIndex = 0;
     document.getElementById("quizContainer").style.display = "block";
     document.getElementById("quizAnswer").style.display = "none";
-    showNextWord();  // Mostra la prima parola all'inizio del quiz
+    
+    // Mostra la prima parola solo al primo avvio del quiz
+    showNextWord();
 });
 
 document.getElementById("nextBtn").addEventListener("click", function () {
-    document.getElementById("quizAnswer").style.display = "block"; // Mostra la risposta
-    // Qui chiamiamo showNextWord dopo un breve ritardo per permettere la lettura della risposta
-    setTimeout(showNextWord, 2000);  // Aspetta 2 secondi prima di mostrare la prossima parola
+    document.getElementById("quizAnswer").style.display = "block";
+});
+
+// Modificato: Aggiungere la logica per gestire il cambio parola solo quando è richiesto
+document.getElementById("startQuiz").addEventListener("click", function () {
+    if (currentWordIndex < shuffledWords.length) {
+        showNextWord();
+    }
 });
 
 function showNextWord() {
@@ -137,6 +144,7 @@ function showNextWord() {
         document.getElementById("quizPrompt").textContent = `Parola: ${word.parola}`;
         document.getElementById("quizAnswer").textContent = `Traduzione: ${word.traduzione}`;
         document.getElementById("quizAnswer").style.display = "none";
+
         currentWordIndex++;
     } else {
         document.getElementById("quizPrompt").textContent = "Quiz terminato!";
