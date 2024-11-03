@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Greco</title>
     <link rel="stylesheet" href="style.css">
-    <title>Sito Greco</title>
 </head>
 <body>
-    <h1>Quiz di Traduzioni Greche</h1>
-    
-    <label for="mode">Modalità:</label>
-    <select id="mode">
-        <option value="traduzione">Traduzione</option>
-        <option value="riconoscimento">Riconoscimento</option>
+    <h1>Quiz di Greco</h1>
+    <label for="modalita">Scegli la modalità:</label>
+    <select id="modalita">
+        <option value="nomi">Nomi</option>
+        <option value="aggettivi">Aggettivi</option>
+        <option value="verbi">Verbi</option>
+        <option value="complementi">Complementi</option>
+        <option value="tutto">Tutto</option>
     </select>
-
     <button id="startQuiz">Inizia Quiz</button>
 
-    <div id="quiz" style="display:none;">
-        <div id="domanda"></div>
-        <button id="submit">Invia Risposta</button>
-        <div id="feedback" style="margin-top: 10px;"></div>
+    <div id="quizContainer" style="display:none;">
+        <p id="quizPrompt" style="font-size: 20px; font-weight: bold;"></p>
+        <button id="nextBtn" style="margin-top: 10px;">Vedi Risposta</button>
+        <p id="quizAnswer" style="display:none; font-weight: bold;"></p>
     </div>
 
     <script src="script.js"></script>
