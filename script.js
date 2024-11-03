@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         feedbackDiv.textContent = ''; // Resetta il feedback
         rispostaInput.value = ''; // Resetta il campo input
+        rispostaInput.focus(); // Focalizza l'input
     }
 
     function iniziaQuiz() {
@@ -160,4 +161,3 @@ document.addEventListener('DOMContentLoaded', function() {
     startQuizButton.addEventListener('click', iniziaQuiz);
     submitButton.addEventListener('click', inviaRisposta);
 });
-
