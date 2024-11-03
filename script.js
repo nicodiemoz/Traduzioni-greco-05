@@ -110,27 +110,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const domandaDiv = document.getElementById('domanda');
     const rispostaInput = document.getElementById('risposta');
     const submitButton = document.getElementById('submit');
+    const feedbackDiv = document.getElementById('feedback');
+
     const traduzioni = [
         { greco: "λόγος", traduzione: "parola" },
         { greco: "φιλία", traduzione: "amicizia" },
         { greco: "ἀλήθεια", traduzione: "verità" }
     ];
+
     let currentQuestionIndex = 0;
 
     function mostraDomanda() {
         const currentTraduzione = traduzioni[currentQuestionIndex];
         if (modeSelect.value === 'traduzione') {
-            domandaDiv.textContent = currentTraduzione.greco;
+            domandaDiv.textContent = currentTraduzione.greco;  // Mostra la parola greca
         } else {
-            domandaDiv.textContent = currentTraduzione.traduzione;
+            domandaDiv.textContent = currentTraduzione.traduzione; // Mostra la traduzione
         }
+        feedbackDiv.textContent = ''; // Resetta il feedback
+        rispostaInput.value = ''; // Resetta il campo input
     }
 
     function iniziaQuiz() {
         currentQuestionIndex = 0;
-        quizDiv.style.display = 'block';
-        traduzioniDiv.style.display = 'none'; // Nascondi le traduzioni
-        mostraDomanda();
+        quizDiv.style.display = 'block'; // Mostra la sezione quiz
+        mostraDomanda(); // Mostra la prima domanda
     }
 
     function inviaRisposta() {
@@ -139,20 +143,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if ((modeSelect.value === 'traduzione' && risposta === currentTraduzione.traduzione) ||
             (modeSelect.value === 'riconoscimento' && risposta === currentTraduzione.greco)) {
-            alert('Risposta corretta!');
+            feedbackDiv.textContent = 'Risposta corretta!';
             currentQuestionIndex++;
             if (currentQuestionIndex < traduzioni.length) {
                 mostraDomanda();
-                rispostaInput.value = '';
             } else {
-                alert('Hai completato il quiz!');
-                quizDiv.style.display = 'none';
+                feedbackDiv.textContent = 'Hai completato il quiz!';
+                quizDiv.style.display = 'none'; // Nascondi il quiz quando finito
             }
         } else {
-            alert('Risposta sbagliata. Riprova.');
+            feedbackDiv.textContent = 'Risposta sbagliata. Riprova.';
         }
     }
 
+    // Aggiungi event listeners
     startQuizButton.addEventListener('click', iniziaQuiz);
     submitButton.addEventListener('click', inviaRisposta);
 });
+
