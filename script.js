@@ -103,52 +103,42 @@ function shuffle(array) {
     }
 }
 
-document.getElementById("startQuiz").addEventListener("click", function () {
-    currentMode = document.getElementById("modalita").value;
-
-    if (currentMode === 'nomi') {
-        shuffledWords = [...nomi];
-    } else if (currentMode === 'aggettivi') {
-        shuffledWords = [...aggettivi];
-    } else if (currentMode === 'verbi') {
-        shuffledWords = [...verbi];
-    } else if (currentMode === 'complementi') {
-        shuffledWords = [...complementi];
-    } else {
-        shuffledWords = [...nomi, ...aggettivi, ...verbi, ...complementi];
+document.addEventListener('DOMContentLoaded', function() {
+    const orderSelect = document.getElementById('order');
+    const traduzioniDiv = document.getElementById('traduzioni');
+    
+    function mostraTraduzioni() {
+        // Rimuovi le traduzioni esistenti
+        traduzioniDiv.innerHTML = '';
+        
+        // Ottieni l'ordine selezionato
+        const ordine = orderSelect.value;
+        
+        // Crea un array di elementi di traduzione
+        const traduzioni = Array.from(document.querySelectorAll('.traduzione'));
+        
+        traduzioni.forEach(traduzione => {
+            const greco = traduzione.getAttribute('data-greco');
+            const traduzioneTesto = traduzione.getAttribute('data-traduzione');
+            
+            // Crea un nuovo elemento per la traduzione
+            const divTraduzione = document.createElement('div');
+            divTraduzione.className = 'traduzione';
+            
+            if (ordine === 'greco') {
+                divTraduzione.textContent = `${greco} - ${traduzioneTesto}`;
+            } else {
+                divTraduzione.textContent = `${traduzioneTesto} - ${greco}`;
+            }
+            
+            traduzioniDiv.appendChild(divTraduzione);
+        });
     }
     
-    shuffle(shuffledWords);
-    currentWordIndex = 0;
-    document.getElementById("quizContainer").style.display = "block";
-    document.getElementById("quizAnswer").style.display = "none";
+    // Aggiungi un listener per il cambiamento dell'ordine
+    orderSelect.addEventListener('change', mostraTraduzioni);
     
-    // Mostra la prima parola solo al primo avvio del quiz
-    showNextWord();
+    // Mostra le traduzioni all'avvio
+    mostraTraduzioni();
 });
 
-document.getElementById("nextBtn").addEventListener("click", function () {
-    document.getElementById("quizAnswer").style.display = "block";
-});
-
-// Modificato: Aggiungere la logica per gestire il cambio parola solo quando è richiesto
-document.getElementById("startQuiz").addEventListener("click", function () {
-    if (currentWordIndex < shuffledWords.length) {
-        showNextWord();
-    }
-});
-
-function showNextWord() {
-    if (currentWordIndex < shuffledWords.length) {
-        let word = shuffledWords[currentWordIndex];
-        document.getElementById("quizPrompt").textContent = `Parola: ${word.parola}`;
-        document.getElementById("quizAnswer").textContent = `Traduzione: ${word.traduzione}`;
-        document.getElementById("quizAnswer").style.display = "none";
-
-        currentWordIndex++;
-    } else {
-        document.getElementById("quizPrompt").textContent = "Quiz terminato!";
-        document.getElementById("nextBtn").style.display = "none";
-        document.getElementById("quizAnswer").style.display = "none";
-    }
-}
